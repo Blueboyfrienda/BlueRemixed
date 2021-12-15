@@ -168,17 +168,18 @@ class MainMenuState extends MusicBeatState
 		
         if (optionShit[CurSelected] == 'Story_Mode')
         {
-            chargeItem(- 1);
-            chargeItem(1);
+           chargeItem(- 1);
+           chargeItem(1);
             
-            char1.dance();
-            char1.updateHitbox();
-            char1.visible = false;
+           char1.dance();
+           char1.updateHitbox();
+           char1.visible = false;
          }
          else
          {
-            char1.visible = false;
+           char1.visible = false;
          }
+         
 		if (!selectedSomethin)
 		{
 			if (controls.UI_UP_P)
