@@ -36,6 +36,7 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
+	private var char1 Character = null
 
 	override function create()
 	{
@@ -88,7 +89,7 @@ class MainMenuState extends MusicBeatState
 		for (i in 0...optionShit.length)
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, 100 * (i * 100));
+			var menuItem:FlxSprite = new FlxSprite(0, 80 * (i * 140));
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
@@ -105,6 +106,11 @@ class MainMenuState extends MusicBeatState
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
+		
+		char1 = new Character(800, -130, 'bf', true);
+		char1.setGraphicSize(Std.int(char1.width * 0.8));
+		add(char1);
+		char1.visible = false;
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
@@ -159,7 +165,20 @@ class MainMenuState extends MusicBeatState
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 5.6, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
-
+		
+        if (optionShit[CurSelected] == 'Story_Mode')
+        {
+            chargeItem(- 1);
+            chargeItem(1);
+            
+            char1.dance();
+            char1.updateHitbox();
+            char1.visible = false;
+         }
+         else
+         {
+            char1.visible = false;
+         }
 		if (!selectedSomethin)
 		{
 			if (controls.UI_UP_P)
